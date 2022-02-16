@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>XHR - Load Text</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h2>XHR - Load Text File</h2>
+    <p>The <code>pet-name.csv</code> file contains popular dog and cat pet names, separated by commas.</p>
+    <p>Note that because XHR is loading a local file, this and the other examples will have to be run off a web server
+        rather than from your computer's hard drive (e.g. banjo.rit.edu or VSCode's liveserver etc)</p>
+
+    <hr>
+    <button id="my-button">Load Data</button>
+    <p id="output">Click button to load</p>
+
+
+    <script>
+        document.querySelector("#my-button").onclick = loadJsonFetch;
+
+        // function loadJsonFetch(){
+        //     fetch('https://swapi.dev/api/people/1').then(response => {
+        //         console.log(response);
+        //         console.log(response.json());
+        //     }).catch(error => {
+        //         console.log(error);
+        //     })
+        // }
+        // function loadJsonFetch(){
+        //     fetch('https://swapi.dev/api/people/1')
+        //     .then(response => response.json())
+        //     .then(json => {
+        //         console.log(json);
+        //         console.log(json.name);
+        //         console.log(json.homeworld);
+        //     }).catch(error =>{
+        //         console.log(error);
+        //     })
+        // }
+
+        // function loadJsonFetch() {
+        //     fetch('data/pet-names.json')
+        //         .then(response => {
+        //             if (response.ok) {
+        //                 return response.json();
+        //             }
+        //             return response.text().then(text => {
+        //                 throw text;
+        //             });
+        //         })
+        //         .then(json => {
+        //             console.log(json);
+        //             const keys = Object.keys(json);
+        //             let html = "";
+        //             for (let k of keys) {
+        //                 const obj = json[k];
+        //                 html += `<h3>${obj.title = obj.title ? obj.title : "No title Found"}</h3>`;
+        //                 html += `<ol>${obj["namelist"].map(w => `<li>${w}</li>`).join("")}</ol>`;
+        //             }
+        //             const dogNames = json.dognames;
+        //             const catNames = json.catnames;
+
+        //             document.querySelector("#output").innerHTML = html;
+        //         }).catch(error => {
+        //             console.log(error);
+        //         });
+        // }
+        // async function loadJsonFetch(){
+        //     try{
+        //         let response = await fetch('https://swapi.dev/api/people/1');
+        //         if(!response.ok){
+        //             if(response.status == 404) console.log("Do 404 stuff!");
+        //             throw new Error(`HTTP error! status: ${response.status}`);
+        //         }
+
+
+        //         let json = await response.json();
+        //         console.log(json);
+        //         console.log(json.name);
+        //         console.log(json.homeworld);
+        //     }
+        //     catch(e){
+        //         console.log(`in catch with e = ${e}`);
+        //     }
+        // }
+        function loadJsonFetch() {
+            const fetchPromise = async () => {
+                let response = await fetch('data/pet-names.json');
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status ${response.status}`);
+                }
+
+                let json = await response.json();
+                console.log(json);
+                const keys = Object.keys(json);
+                let html = "";
+                for (let k of keys) {
+                    const obj = json[k];
+                    html += `<h3>${obj.title = obj.title ? obj.title : "No title Found"}</h3>`;
+                    html += `<ol>${obj["namelist"].map(w => `<li>${w}</li>`).join("")}</ol>`;
+                }
+                const dogNames = json.dognames;
+                const catNames = json.catnames;
+
+                document.querySelector("#output").innerHTML = html;
+                console.log(json);
+                console.log(json.name);
+                console.log(json.homeworld);
+            };
+
+            fetchPromise().catch(e => {
+                console.log(`In catch with e = ${e}`);
+            });
+        };
+    // function loadXmlXHR(){
+    //     const url = "data/pet-names.json";
+    //     const xhr = new XMLHttpRequest();
+    //     xhr.onload = (e) => {
+    //         console.log(`In onload - HTTP Status Code = ${e.target.status}`);
+    //         //const string =
+    //         const json = JSON.parse(e.target.responseText);
+
+    //         const keys = Object.keys(json);
+    //         let html = "";
+    //         for(let k of keys){
+    //             const obj = json[k];
+    //             html += `<h3>${obj.title = obj.title ? obj.title : "No title Found" }</h3>`;
+    //             html += `<ol>${obj["namelist"].map(w => `<li>${w}</li>`).join("")}</ol>`;
+    //         }
+    //         const dogNames = json.dognames;
+    //         const catNames = json.catnames;
+    //         //const birdNames = xml.querySelector("namelist[cid='birdnames']").textContent.split(",");
+
+    //        // const dogHTML = `<ol>${dogNames.map(w => `<li>${w}</li>`).join("")}</ol>`;
+    //        //cf
+    //         //const catHTML = `<ol>${catNames.map(w => `<li>${w}</li>`).join("")}</ol>`;
+    //        // const birdHTML = `<ol>${birdNames.map(w => `<li>${w}</li>`).join("")}</ol>`;
+
+    //         //const html = `<ol>${words.map(w => `<li>${w}</li>`).join("")}</ol>`;
+    //         document.querySelector("#output").innerHTML = html;
+    //     };
+    //     xhr.onerror = e => console.log(`In onerror -HTTP Status Coe = ${e.target.status}`);
+    //     xhr.open("GET",url);
+    //     xhr.send();
+    // }
+    </script>
+</body>
+
+</html>
