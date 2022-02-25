@@ -7,7 +7,7 @@
     <title>Reese Stock Analysis</title>
     <link rel="stylesheet" href="styles/stockstylesheet.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <script type="module" src="src/main.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 </head>
 
@@ -42,23 +42,24 @@
     <section class="section">
         <div class="container">
             <input type="search" id="stock-search" placeholder="Search Quote" class="input">
-            <button class="button is-link" id="search-button">search</button>
+            <button class="button" id="search-button">search</button>
             <div class="radio">
-                <input class="radio" name="my-radio" type="radio" value="option1" id="month-radio">
+                <input class="radio-input" name="my-radio" type="radio" value="option1" id="month-radio">
                 <label class="radio-label" for="month-radio">Montly</label>
-                <input class="radio" name="my-radio" type="radio" value="option2" id="week-radio">
+                <input class="radio-input" name="my-radio" type="radio" value="option2" id="week-radio">
                 <label class="radio-label" for="week-radio">Weekly</label>
-                <input class="radio" name="my-radio" type="radio" value="option3" id="day-radio">
+                <input class="radio-input" name="my-radio" type="radio" value="option3" id="day-radio">
                 <label class="radio-label" for="day-radio">Daily</label>
-                <input class="radio" name="my-radio" type="radio" value="option4" id="intraday-radio">
+                <input class="radio-input" name="my-radio" type="radio" value="option4" id="intraday-radio">
                 <label class="radio-label" for="intraday-radio">Intraday</label>
-            </div>
-            <div class="stock-cards">
-            
+            <div id="stock-cards">
+                
             </div>
         </div>
     </section>
-    
+    <script type="module" src="src/main.js">
+
+    </script>
 
 </body>
 

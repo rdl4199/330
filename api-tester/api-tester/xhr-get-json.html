@@ -22,7 +22,7 @@
 <script>
     document.querySelector("#my-button").onclick = loadJsonXHR;
     function loadJsonXHR(){
-        const url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=15min&outputsize=full&apikey=28VOP1X5XT3XR809";
+        const url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&outputsize=full&apikey=28VOP1X5XT3XR809";
         // https://dog.ceo/api/breed/hound/images
         const xhr = new XMLHttpRequest();
         xhr.onload = (e) => {

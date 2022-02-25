@@ -1,11 +1,14 @@
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reese Stock Analysis</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reese Stock Analysis</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
+
 <body>
     <nav class="navbar has-shadow is-white">
         <!-- log/ brand-->
@@ -19,7 +22,7 @@
                 <span></span>
             </a>
         </div>
-        <div class="navbar-menu" id ="main-menu">
+        <div class="navbar-menu" id="main-menu">
             <div class="navbar-end">
                 <a class="navbar-item" href="app.html">
                     App
@@ -33,6 +36,41 @@
             </div>
         </div>
     </nav>
+    <h3>Info about the project</h3>
+    <h2>Project Requirements</h2>
+    <ul>
+        <li>https://github.com/tonethar/IGME-330-Spring-2022/blob/main/projects/p1-checkpoint-1.md</li>
+    </ul>
+    <h2>Alphavantage API documentation</h2>
+    <ul>
+        <li>API Documentation:<a href="https://www.alphavantage.co/documentation/">https://www.alphavantage.co/documentation/</a></li>
+        <li>API Home:<a href="https://www.alphavantage.co/">https://www.alphavantage.co/</a></li>
+        <li>API Endpoint: https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=IBM&apikey=demo</li>
+    </ul>
+    <h2>Resources Utilized</h2>
+    <ul>
+        <li>https://bulma.io/documentation/</li>
+        <li>https://www.chartjs.org/</li>
+        <li>https://developer.mozilla.org/en-US/docs/Web/JavaScript</li>
+        <li>https://www.geeksforgeeks.org/how-to-check-whether-an-object-exists-in-javascript/#:~:text=Method%201%3A%20Using%20the%20typeof,will%20always%20return%20%E2%80%9Cundefined%E2%80%9D.</li>
+        <li>https://github.com/tonethar/IGME-330-Master/blob/master/notes/HW-wc-3.md</li>
+    </ul>
+    <h2>Note Worthy</h2>
+    <ul>
+        <li>Mobile Friendly: </li>
+        <ol>
+            <li>Bulma provides methods in making certain resources resizeable in the browser</li>
+            <li>A burger menu appears when the window is less than 1024px</li>
+        </ol>
+        <li>Code:</li>
+        <ol>
+            <li>There is very little reused code with the hel of ES6 Modules</li>
+            <li>Chart JS is created for the final version so it can display nice looking
+                stock information in the final project.
+            </li>
+        </ol>
+    </ul>
+    <h2>Checkpoint 1 Documentation:</h2>
     <section class="section">
         <div class="container">
             <div class="columns is-vcentered">
@@ -44,14 +82,17 @@
                 </div>
                 <div class="column is-4">
                     <h1 class="is-size-1 title">Plans</h1>
-                    <p class="mb-4">Being able to add stocks to keep track of gains or losses. Possibly a daytrading type of app. I then want like a bar that scrolls through stocks that are randomly generated like a news forecast might do.</p>
+                    <p class="mb-4">Being able to add stocks to keep track of gains or losses. Possibly a daytrading
+                        type of app. I then want like a bar that scrolls through stocks that are randomly generated like
+                        a news forecast might do.</p>
                 </div>
             </div>
         </div>
     </section>
-    <script  type = "module" src="src/init.js">
+    <script type="module" src="src/init.js">
 
     </script>
 
 </body>
+
 </html>
