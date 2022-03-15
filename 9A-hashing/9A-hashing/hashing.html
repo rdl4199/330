@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hashing</title>
+  <script>
+  // BAD - because we are just adding together the character codes,
+  // the same letters, but in different order, give us the same key!
+  // also, our hash length is variable depending on the length of the string
+  const badHashCode = (str) => {
+    let hash = 0;
+    if (str.length == 0) {
+        return hash;
+    }
+    for (let i = 0; i < str.length; i++) {
+        let char = str.charCodeAt(i);
+        hash += char;
+    }
+    return hash;
+  }
+
+  // Better - the hashes are all the same length and
+  // and different letter order gives different results
+  // Why multiply times 31?
+  // https://stackoverflow.com/questions/299304/why-does-javas-hashcode-in-string-use-31-as-a-multiplier
+  const betterHashCode = (str) => {
+    let hash = 0;
+    if (str.length == 0) {
+        return hash;
+    }
+    for (let i = 0; i < str.length; i++) {
+        let char = str.charCodeAt(i);
+        hash = hash * 31 + char;
+    }
+    return hash;
+  }
+
+  // Here is the one-liner of the above code - it does the same thing
+  // and is a little bit faster due to the bitshifting instead of multiplication
+  // https://stackoverflow.com/questions/51960331/why-5-bit-left-shift-in-hashing-function
+  const hashCode = (str) => {
+    return str.split("").reduce((prevHash, currVal) => (((prevHash << 5) - prevHash) + currVal.charCodeAt(0)) | 0, 0);
+  };
+
+
+  console.log(`badHashCode("tony") = '${badHashCode("tony")}'`);
+  console.log(`badHashCode("ynot") = '${badHashCode("ynot")}'`);
+  console.log(`badHashCode("I am Lord Voldemort") = '${badHashCode("I am Lord Voldemort")}'`);
+  console.log(`badHashCode("Tom Marvolo Riddle ") = '${badHashCode("Tom Marvolo Riddle ")}'`);
+  console.log(`betterHashCode("") = '${betterHashCode("")}'`);
+  console.log(`hashCode("") = '${hashCode("")}'`);
+  console.log(`betterHashCode("TJ") = '${betterHashCode("TJ")}'`);
+  console.log(`hashCode("JT") = '${hashCode("JT")}'`);
+  console.log(`betterHashCode("tony") = '${betterHashCode("tony")}'`);
+  console.log(`hashCode("tony") = '${hashCode("tony")}'`);
+  console.log(`betterHashCode("ynot") = '${betterHashCode("ynot")}'`);
+  console.log(`hashCode("ynot") = '${hashCode("ynot")}'`);
+  console.log(`betterHashCode("andy") = '${betterHashCode("andy")}'`);
+  console.log(`hashCode("andy") = '${hashCode("andy")}'`);
+  console.log(`hashCode("https://www.rit.edu/experiential-learning") = '${hashCode("https://www.rit.edu/experiential-learning")}'`);
+  console.log(`hashCode("https://www.amazon.com/Cookin-Coolio-Star-Meals-Price/dp/1439117616/") = '${hashCode("https://www.amazon.com/Cookin-Coolio-Star-Meals-Price/dp/1439117616/")}'`);
+  </script>
+</head>
+<body></body>
+</html>

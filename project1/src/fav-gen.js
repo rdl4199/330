@@ -19,30 +19,38 @@ template.innerHTML = `
         letter-spacing: .67px;
         line-height: 1.2;
         margin-top: 0;
+        display : inline;
+        text-align: left;
     }
   
-    img{
-        width: 100px;
+    name, value{
+        display : inline;
+        text-align: left;
     }
 </style>
-<div id="card"> 
-    <h2></h2>
-    <p id="high">High: </p>
-    <p id="low">Low:</p>
-    <button id="unfavorite" class="button">Unfavorite</button>
+<div id="line" class="columns"> 
+    <div id="name" class="column is-2"></div>
+    <div id="value" class="column is-2"></div>
+    <div id="range" class="column is-2"></div>
+    <div id="volume" class="column is-2"></div>
+    <div id="likes" class="column is-4"></div>
+    <div id="column is-2"><button id="unfavorite" class="button">Unfavorite</button></div>
+    <hr>
 </div>
 `;
 
-class StockCard extends HTMLElement{
+class StockLine extends HTMLElement{
     constructor(){  
         super();
 
         this.attachShadow({mode: "open"});
 
         this.shadowRoot.appendChild(template.content.cloneNode(true));
-        this.h2 = this.shadowRoot.querySelector("h2");
-        this.p1 = this.shadowRoot.querySelector("#high");
-        this.p2 = this.shadowRoot.querySelector("#low");
+        this.name = this.shadowRoot.querySelector("#name");
+        this.value = this.shadowRoot.querySelector("#value");
+        this.range = this.shadowRoot.querySelector("#range");
+        this.volume = this.shadowRoot.querySelector("#volume");
+        this.likes = this.shadowRoot.querySelector("#likes");
         this.button = this.shadowRoot.querySelector("button");
     }
     connectedCallback(){
@@ -69,20 +77,24 @@ class StockCard extends HTMLElement{
     }
 
     static get observedAttributes(){
-        return["data-name", "data-high","data-low"];
+        return["data-name", "data-value","data-range", "data-volume", "data-likes"];
     }
 
     render(){
         const name = this.getAttribute('data-name') ? this.getAttribute('data-name') : "-1";
-        const high = this.getAttribute('data-high') ? this.getAttribute('data-high') : "-1";
-        const low = this.getAttribute('data-low') ? this.getAttribute('data-low') : "-1";
+        const value = this.getAttribute('data-value') ? this.getAttribute('data-value') : "-1";
+        const range = this.getAttribute('data-range') ? this.getAttribute('data-range') : "-1";
+        const volume = this.getAttribute('data-volume') ? this.getAttribute('data-volume') : "-1";
+        const likes = this.getAttribute('data-likes') ? this.getAttribute('data-likes') : "-1";
        // const latest = this.getAttribute('data-latest') ? this.getAttribute('data-latest') : "0";
 
-        this.h2.innerHTML = `${name}`;
-        this.p1.innerHTML = `High: ${high}`;
-        this.p2.innerHTML = `Low: ${low}`;
+        this.name.innerHTML = `${name}`;
+        this.value.innerHTML = `$${value}`;
+        this.range.innerHTML = `Last range: ${range}`;
+        this.volume.innerHTML = `Volume: ${volume}`
+        this.likes.innerHTML = `Likes: ${likes}`
        // this.p3.innerHTML = `Latest ${latest}`;
         
     }
 };
-customElements.define('stock-card', StockCard);
+customElements.define('stock-line', StockLine);

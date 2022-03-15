@@ -38,3 +38,8 @@
 stock-card{
     margin: 0 0.5rem 0.5rem 0;
 }
+#tabs{
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+}

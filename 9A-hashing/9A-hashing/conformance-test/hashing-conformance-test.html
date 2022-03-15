@@ -1,0 +1,97 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hashing</title>
+  <!-- https://cdnjs.com/libraries/blueimp-md5 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.js"></script>
+  <script type="module">
+  import {allWords} from "./all-words.js";
+
+  const badHashCode = (str) => {
+    let hash = 0;
+    if (str.length == 0) {
+        return hash;
+    }
+    for (let i = 0; i < str.length; i++) {
+        let char = str.charCodeAt(i);
+        hash += char;
+    }
+    return hash;
+  }
+
+  // Better - the hashes are all the same length and
+  // and different letter order gives different results
+  // Why multiply times 31?
+  // https://stackoverflow.com/questions/299304/why-does-javas-hashcode-in-string-use-31-as-a-multiplier
+  const betterHashCode = (str) => {
+    let hash = 0;
+    if (str.length == 0) {
+        return hash;
+    }
+    for (let i = 0; i < str.length; i++) {
+        let char = str.charCodeAt(i);
+        hash = hash * 31 - char;
+    }
+    return hash;
+  }
+
+  // Here is the one-liner of the above code - it does the same thing
+  // and is a little bit faster due to the bitshifting instead of multiplication
+  // https://stackoverflow.com/questions/51960331/why-5-bit-left-shift-in-hashing-function
+  const hashCode = (str) => {
+    return str.split("").reduce((prevHash, currVal) => (((prevHash << 5) - prevHash) + currVal.charCodeAt(0)) | 0, 0);
+  };
+
+
+  // I. Conformance Test
+  // https://en.wikipedia.org/wiki/Conformance_testing
+  const testHash = (wordArray,hashFunction) => {
+    const hashArray = [];
+    const countsDictionary = {};
+    const collisionsDictionary = {};
+    let numCollisions = 0;
+    for (let word of wordArray){
+      const hash = hashFunction(word);
+      hashArray.push(hash);
+      countsDictionary[hash] = (countsDictionary[hash] || 0) + 1;
+     
+      const entry = collisionsDictionary[hash];
+      if(entry && entry.count){
+        entry.words.push(word);
+        entry.count += 1;
+        collisionsDictionary[hash] = entry;
+        numCollisions += 1;
+      }else{
+        collisionsDictionary[hash] = {count:1, words:[word]};
+      }
+    }
+
+    console.log("Total words = ",wordArray.length);
+    console.log("Total hash dictionary entries = ",Object.keys(countsDictionary).length);
+    console.log("Total collisions = ",numCollisions);
+    console.log("Total collisionsDictionary entries = ",Object.keys(collisionsDictionary).length);
+    
+
+    for(let hash of Object.keys(collisionsDictionary)){
+      const dictionary = collisionsDictionary[hash];
+      if(dictionary.count > 1){
+        console.log("hash = ",hash,"dictionary = ",dictionary);
+      }
+    }
+  };
+
+  testHash(allWords,badHashCode);
+
+  // console.log("hashCode for 'presentencing' and 'wainages' = ",hashCode("presentencing"),hashCode("wainages"));
+  // console.log("hashCode for 'locular' and 'trichothecenes' = ",hashCode("locular"),hashCode("trichothecenes"));
+  // console.log("md5 for these are different: ",md5("presentencing"),md5("wainages"));
+  // console.log("md5 for these are different: ",md5("locular"),md5("md5"));
+    
+</script>
+</head>
+<body>
+  
+</body>
+</html>

@@ -7,13 +7,18 @@
     <title>Reese Stock Analysis</title>
     <link rel="stylesheet" href="styles/stockstylesheet.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    
     <script type="module" src="src/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 </head>
 
 <body>
+  <div id="bulma-nav">
+
+  </div>
+  <!--
     <nav class="navbar has-shadow is-white">
-        <!-- log/ brand-->
+       log brand
         <div class="navbar-brand">
             <a class="navbar-item" href="home.html">
                 Home
@@ -38,28 +43,49 @@
                 </a>
             </div>
         </div>
-    </nav>
+    </nav>-->
     <section class="section">
         <div class="container">
-            <input type="search" id="stock-search" placeholder="Search Quote" class="input">
-            <button class="button is-link" id="search-button">search</button>
-            <div class="radio">
-                <input class="radio" name="my-radio" type="radio" value="option1" id="month-radio">
-                <label class="radio-label" for="month-radio">Montly</label>
-                <input class="radio" name="my-radio" type="radio" value="option2" id="week-radio">
-                <label class="radio-label" for="week-radio">Weekly</label>
-                <input class="radio" name="my-radio" type="radio" value="option3" id="day-radio">
-                <label class="radio-label" for="day-radio">Daily</label>
-                <input class="radio" name="my-radio" type="radio" value="option4" id="intraday-radio">
-                <label class="radio-label" for="intraday-radio">Intraday</label>
+            <div class="field has-addons">
+              <div class="control">
+                <input type="search" id="stock-search" placeholder="Search Quote ex: IBM, AMD" class="input">
+              </div>
+              <div class="control">
+                <button class="button is-link" id="search-button">Search</button>
+              </div>
             </div>
-            <div class="stock-cards">
+            <div class="tabs is-toggle" id="tabs">
+                <ul>
+                  <li class="is-active" id="monthly">
+                    <a>
+                      <span>Monthly</span>
+                    </a>
+                  </li>
+                  <li id="weekly">
+                    <a>
+                      <span>Weekly</span>
+                    </a>
+                  </li>
+                  <li id="daily">
+                    <a>
+                      <span>Daily</span>
+                    </a>
+                  </li>
+                  <li id="intraday">
+                    <a>
+                      <span>Intraday</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            
+            <div id="stock-image" >
             
             </div>
         </div>
     </section>
     
-
+    <div id="bulma-foot"></div>
 </body>
 
 </html>

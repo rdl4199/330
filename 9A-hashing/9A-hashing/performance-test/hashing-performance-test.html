@@ -1,0 +1,107 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hashing</title>
+  <!-- https://cdnjs.com/libraries/blueimp-md5 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.js"></script>
+  <script type="module">
+  import {allWords} from "./all-words.js";
+
+  const badHashCode = (str) => {
+    let hash = 0;
+    if (str.length == 0) {
+        return hash;
+    }
+    for (let i = 0; i < str.length; i++) {
+        let char = str.charCodeAt(i);
+        hash += char;
+    }
+    return hash;
+  }
+
+  // Better - the hashes are all the same length and
+  // and different letter order gives different results
+  // Why multiply times 31?
+  // https://stackoverflow.com/questions/299304/why-does-javas-hashcode-in-string-use-31-as-a-multiplier
+  const betterHashCode = (str) => {
+    let hash = 0;
+    if (str.length == 0) {
+        return hash;
+    }
+    for (let i = 0; i < str.length; i++) {
+        let char = str.charCodeAt(i);
+        hash = hash * 31 - char;
+    }
+    return hash;
+  }
+
+  // Here is the one-liner of the above code - it does the same thing
+  // and is a little bit faster due to the bitshifting instead of multiplication
+  // https://stackoverflow.com/questions/51960331/why-5-bit-left-shift-in-hashing-function
+  const hashCode = (str) => {
+    return str.split("").reduce((prevHash, currVal) => (((prevHash << 5) - prevHash) + currVal.charCodeAt(0)) | 0, 0);
+  };
+
+  const test0 = (array = []) => {
+    const hashes = [];
+    for (let w of array){
+      hashes.push(badHashCode(w));
+    }
+    return hashes;
+  };
+
+  const test1 = (array = []) => {
+    const hashes = [];
+    for (let w of array){
+      hashes.push(betterHashCode(w));
+    }
+    return hashes;
+  };
+
+  const test2 = (array = []) => {
+    const hashes = [];
+    for (let w of array){
+      hashes.push(hashCode(w));
+    }
+    return hashes;
+  };
+
+  const test3 = (array = []) => {
+    const hashes = [];
+    for (let w of array){
+      hashes.push(md5(w));
+    }
+    return hashes;
+  };
+
+
+  // II. Performance Test
+  // https://levelup.gitconnected.com/different-ways-to-measure-performance-in-javascript-94785075ab96
+
+  console.time("test0");
+  const t0 = test0(allWords);
+  console.timeEnd("test0");
+
+  console.time("test1");
+  const t1 = test1(allWords);
+  console.timeEnd("test1");
+
+  console.time("test2");
+  const t2 = test2(allWords);
+  console.timeEnd("test2");
+
+  console.time("test3");
+  const t3 = test3(allWords);
+  console.timeEnd("test3");
+
+ 
+
+  
+</script>
+</head>
+<body>
+  
+</body>
+</html>
