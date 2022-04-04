@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>First Canvas</title>
+    <style type="text/css">
+        canvas {
+            border: 1px solid gray;
+        }
+    </style>
+    <script>
+        // #0 - in this class we will always use ECMAScript 5's "strict" mode
+        // See what 'use strict' does here:
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode
+        'use strict';
+
+        // #1 call the `init` function after the pages loads
+        window.onload = init;
+        let ctx;
+        function init() {
+            console.log("page loaded!");
+            // #2 Now that the page has loaded, start drawing!
+
+            // A - `canvas` variable points at <canvas> tag
+            let canvas = document.querySelector('canvas');
+
+            // B - the `ctx` variable points at a "2D drawing context"
+            ctx = canvas.getContext('2d');
+
+            // C - all fill operations are now in red
+            ctx.fillStyle = 'black';
+
+            // D - fill a rectangle with the current fill color
+            ctx.fillRect(0, 0, 640, 480)
+            // ctx.fillRect(20, 20, 600, 440);
+            // ctx.fillStyle = 'yellow';
+            // ctx.fillRect(120, 120, 400, 300);
+
+            // // ctx.strokeStyle = 'magenta';
+            // ctx.lineWidth = 10;
+            // // ctx.strokeRect(120,120, 400, 300);
+            // ctx.fillStyle = 'yellow';
+            // ctx.strokeStyle = 'Magenta';
+            // ctx.beginPath();
+            // ctx.rect(120, 120, 400, 300);
+            // ctx.closePath();
+            // ctx.fill();
+            // ctx.stroke();
+
+            // //lines
+            // ctx.beginPath();
+            // ctx.moveTo(20, 20);
+            // ctx.lineTo(640, 460);
+            // ctx.closePath();
+            // ctx.stroke();
+
+            // ctx.beginPath();
+            // ctx.moveTo(620, 20);
+            // ctx.lineTo(20, 460);
+            // ctx.closePath();
+            // ctx.stroke();
+
+            // ctx.beginPath();
+            // ctx.moveTo(20, 300);
+            // ctx.lineTo(620, 300);
+            // ctx.lineWidth = 20;
+            // ctx.closePath();
+            // ctx.stroke();
+            // ctx.lineWidth = 10;
+            // // circle
+            // ctx.fillStyle = 'green'
+            // ctx.strokeStyle = 'purple';
+            // ctx.beginPath();
+            // ctx.arc(320, 240, 50, 0, Math.PI * 2, false)
+            // ctx.closePath();
+            // ctx.fill();
+            // ctx.stroke();
+
+            // ctx.fillStyle = 'black'
+            // ctx.strokeStyle = 'white';
+            // ctx.beginPath();
+            // ctx.arc(310, 230, 10, 0, Math.PI * 2, false)
+            // ctx.closePath();
+            // ctx.fill();
+            // ctx.stroke();
+
+            // ctx.fillStyle = 'black'
+            // ctx.strokeStyle = 'white';
+            // ctx.beginPath();
+            // ctx.arc(330, 230, 10, 0, Math.PI * 2, false)
+            // ctx.closePath();
+            // ctx.fill();
+            // ctx.stroke();
+
+
+            // ctx.fillStyle = 'gray'
+            // ctx.strokeStyle = 'yellow';
+            // ctx.beginPath();
+            // ctx.arc(320, 240, 20, 0, Math.PI, false)
+            // ctx.closePath();
+            // ctx.fill();
+            // ctx.stroke();
+            // handy helper functions!
+            update();
+        }
+        function getRandomColor() {
+            function getByte() {
+                return Math.round(Math.random() * 1000);
+            }
+            return "rgba(" + getByte() + "," + getByte() + "," + getByte() + ",.8)";
+        }
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function getRandomColorDark() {
+            function getByte() {
+                return 55 + Math.round(Math.random() * 10);
+            }
+            return "rgba(" + getByte() + "," + getByte() + "," + getByte() + ",.8)";
+        }
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function update() {
+
+            ctx.lineWidth = getRandomInt(2, 12);
+            requestAnimationFrame(update);
+            drawRandomPop(ctx);
+            drawRandomRect(ctx);
+        }
+        function drawRandomRect(ctx) {
+            ctx.fillStyle = getRandomColorDark();
+            ctx.beginPath();
+            ctx.rect(getRandomInt(0, 640), getRandomInt(0, 480), getRandomInt(10, 500), getRandomInt(10, 500));
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+        }
+        function drawRandomPop(ctx) {
+            const end1 = getRandomInt(0, 640);
+            const end2 = getRandomInt(0, 480);
+            const start1 = getRandomInt(0, 640);
+            const start2 = getRandomInt(0, 480);
+            const size = getRandomInt(20, 100);
+            ctx.beginPath();
+            ctx.strokeStyle = getRandomColor();
+            ctx.lineTo(start1, start2);
+            ctx.arc(end1, end2, size, 0, Math.PI * 2, false)
+            ctx.lineTo(start1, start2);
+            ctx.closePath();
+            ctx.stroke();
+        }
+    </script>
+</head>
+
+<body>
+    <canvas width="640" height="480">
+        Get a real browser!
+    </canvas>
+</body>
+
+</html>

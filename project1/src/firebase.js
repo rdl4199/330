@@ -1,3 +1,4 @@
+import * as main from "./main.js"
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-app.js";
 import { getDatabase, ref, set, push, onValue, increment } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-database.js";
 function firebaseInit() {
@@ -27,7 +28,7 @@ function firebaseInit() {
 
 }
 firebaseInit();
-function writeFavNameData(name, value, range, volume) {
+function writeFavNameData(name, value, range, volume, count) {
     const db = getDatabase();
     const favRef = ref(db, 'favorites/' + name);
     set(favRef, {
@@ -35,20 +36,26 @@ function writeFavNameData(name, value, range, volume) {
         value,
         range,
         volume,
-        likes: increment(1)
+        likes: increment(parseInt(count))
     });
+
 }
 
 
 function favoritesChanged(snapshot) {
     // TODO: clear #favoritesList
-    document.querySelector("#favoritesList").innerHTML = "";
+    document.querySelector(".stock-cards").innerHTML = "";
     snapshot.forEach(fav => {
         const childKey = fav.key;
         const childData = fav.val();
         console.log(childKey, childData);
+        console.log(childData.name);
+        console.log(childData.value);
         // TODO: update #favoritesList
-        document.querySelector("#favoritesList").innerHTML += `<li><b>${childData.name}</b> - Likes ${childData.likes}</li>`;
+        if(parseInt(childData.likes) > 0)
+        {
+            main.showStock({name: childData.name, value: childData.value, range: childData.range, volume:childData.volume, likes: childData.likes});
+        }
     });
 };
 
@@ -56,9 +63,5 @@ function init(){
     const db = getDatabase();
     const favoritesRef = ref(db, 'favorites/');
     onValue(favoritesRef, favoritesChanged);
-
-    btnSubmit.onclick = () => {
-        writeFavNameData(nameField.value);
-    };
 };
 export {writeFavNameData, firebaseInit, favoritesChanged, init}

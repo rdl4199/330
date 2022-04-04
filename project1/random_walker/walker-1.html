@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Walker-1</title>
+	<style>
+		canvas {
+			border: 1px solid gray;
+		}
+	</style>
+	<script>
+
+		let walker = {
+			x: 320,
+			y: 240,
+			bias: 2,
+			color: "black",
+			width: 5,
+			move() {
+				let num = travelNorth(this.x, this.y, this.bias);
+				if (num == 0) {
+					this.y--;
+				}
+				if (num == -1) {
+					this.x--;
+				}
+				if (num == 1) {
+					this.x++;
+				}
+				//console.log("This is neriwejriowjerpweord")
+			}
+		};
+		let walkers = [];
+		function createWalker(xPos, yPos) {
+			let walkman = {
+				x: xPos,
+				y: yPos,
+				bias: Math.floor(Math.random() * 3),
+				color: getRandomColor(),
+				width: 5,
+				move() {
+					let num = travelNorth(this.x, this.y,this.bias);
+					if (num == 0) {
+						this.y--;
+					}
+					if (num == -1) {
+						this.x--;
+					}
+					if (num == 1) {
+						this.x++;
+					}
+				}
+			}
+			walkers.push(walkman);
+		}
+
+		// #0 - in this class we will always use ECMAScript 5's "strict" mode
+		// See what 'use strict' does here:
+		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode
+		'use strict';
+		let ctx;
+		// #1 call the init function after the pages loads
+		window.onload = function () {
+			console.log("page loaded!");
+			// #2 Now that the page has loaded, start drawing!
+
+			// A - canvas variable points at <canvas> tag
+			let canvas = document.querySelector('canvas');
+
+			// B - the ctx variable points at a "2D drawing context"
+			ctx = canvas.getContext('2d');
+
+			// C - all fill operations are now in red
+			ctx.fillStyle = "#F5F5F5";
+
+			// D - fill a rectangle with the current fill color
+			ctx.fillRect(20, 20, 600, 440);
+
+			setInterval(drawWalker, 1000 / 12);
+			createWalker(320,240,0);
+			createWalker(320,240,0);
+			createWalker(320,240,0);
+			createWalker(320,240,0);
+			createWalker(320,240,2);
+			createWalker(320,240,2);
+			createWalker(320,240,1);
+			createWalker(320,240,1);
+			createWalker(320,240,1);
+			createWalker(320,240,1);
+			//		setInterval(cls,5000);
+		}
+
+
+		// function drawWalker(){
+		// 	ctx.fillStyle = walker.color;
+		// //	ctx.globalAlpha = 0.2;
+		// 	ctx.fillRect(walker.x-walker.width/2,walker.y-walker.width/2,walker.width/2,walker.width/2);
+		// 	walker.move();
+		// }
+		function drawWalker() {
+			//console.log("this is happening");
+			for(let i = 0; i < walkers.length; i++)
+			{
+				ctx.fillStyle = walkers[i].color;
+				ctx.fillRect(walkers[i].x - walkers[i].width / 2, walkers[i].y - walkers[i].width / 2, walkers[i].width / 2, walkers[i].width / 2);
+				walkers[i].move();
+			}
+			ctx.fillStyle = walker.color;
+			//	ctx.globalAlpha = 0.2;
+			ctx.fillRect(walker.x - walker.width / 2, walker.y - walker.width / 2, walker.width / 2, walker.width / 2);
+			walker.move();
+		}
+
+		// UTILS
+		function getRandomColor() {
+			function getByte() {
+				return 100 + Math.round(Math.random() * 300);
+			}
+			return "rgba(" + getByte() + "," + getByte() + "," + getByte() + ",.8)";
+		}
+
+		function cls() {
+			ctx.clearRect(0, 0, 640, 480);
+		}
+
+		function flipWeightedCoin(weight = 0.5) {
+			return Math.random() < weight;
+		}
+		function travelNorth(x,y,bias) {
+			let num;
+			if(bias == 0)
+			{
+				num = Math.random() * 800;
+			}
+			if(bias == 1)
+			{
+				num = 200 + Math.random() * 800;
+			}
+			if(bias == 2)
+			{
+				num = Math.random() * 1000;
+			}
+			console.log(num);
+			if (num <= 400) {
+				if (num <= 3) {
+					createWalker(x,y);
+				}
+				return -1;
+			}
+			if (num >= 600) {
+				if (num >= 997) {
+					createWalker(x,y);
+				}
+				return 1;
+			}
+			return 0;
+		}
+	</script>
+</head>
+
+<body>
+	<canvas width="640" height="480">
+		Get a real browser!
+	</canvas>
+</body>
+
+</html>

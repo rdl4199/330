@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Lorenz Attractor Start</title>
+	<style>canvas{border: 1px solid black;}</style>
+	<script>
+	
+	let ctx;
+    let counter = 0;
+	const canvasWidth = 800, canvasHeight = 600;
+	let x = .01;
+    let y = 0;
+    let z = 0;
+    let a = 10;
+    let b = 28;
+    let c = 8/3;
+    let scale = 8;
+    window.onload = init;
+
+	function init(){
+	  ctx = canvas.getContext("2d");
+	  canvas.width = canvasWidth;
+	  canvas.height = canvasHeight;
+	  ctx.fillRect(0,0,canvasWidth,canvasHeight);
+      loop();
+	}
+    function loop(){
+        requestAnimationFrame(loop);
+        counter += .05;
+        if(counter > 360) counter = 360;
+        let dt = .01;
+        let dx = (a * (y-x)) * dt;
+        let dy = (x * (b-z) - y) * dt;
+        let dz = (x * y - c * z) * dt;
+        x += dx;
+        y += dy;
+        z += dz;
+        console.log(x,y,z);
+        ctx.save();
+      //  let value = 255 - (z * scale);
+        ctx.translate(canvas.width/2, canvas.height/2);
+      //  ctx.fillStyle = `rgb(${255 - value}, ${255- value},${value})`
+        ctx.fillStyle = `hsl(${counter},100%,50%)`
+        ctx.fillRect(x * scale,y * scale,2,2);
+
+        ctx.restore();
+    }
+	</script>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+</body>
+</html>

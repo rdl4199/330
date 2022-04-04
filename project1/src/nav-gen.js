@@ -1,4 +1,5 @@
 import * as storage from "./storage.js";
+import * as burger from "./styles.js";
 const template = document.createElement("template");
 template.innerHTML = `
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
@@ -27,7 +28,7 @@ template.innerHTML = `
         <a id="Documentation" class="navbar-item" href="documentation.html">
             Documentation
         </a>
-        <a id="Community" class="navbar-item" href="Community.html">
+        <a id="Community" class="navbar-item" href="community.html">
             Community
         </a>
     </div>
@@ -48,6 +49,7 @@ class NavComp extends HTMLElement{
         this.a3 = this.shadowRoot.querySelector("#Favorite");
         this.a4 = this.shadowRoot.querySelector("#Documentation");
         this.a5 = this.shadowRoot.querySelector("#Community")
+        this.burger = this.shadowRoot.querySelector("#burger");
     }
     connectedCallback(){
         this.render();
@@ -70,7 +72,14 @@ class NavComp extends HTMLElement{
     render(){
         const category = this.getAttribute('data-category') ? this.getAttribute('data-category') : "-1";
        // const latest = this.getAttribute('data-latest') ? this.getAttribute('data-latest') : "0";
-
+        
+        const navBurger = this.shadowRoot.querySelector('.navbar-burger');
+        const menu = this.shadowRoot.querySelector('#main-menu');
+        
+        navBurger.onclick = ()=>{
+            menu.classList.toggle('is-active');
+        }
+            
         if(category == "Home")
         {
             this.a1.className = "navbar-item has-text-weight-bold is-link"

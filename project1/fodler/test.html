@@ -1,0 +1,65 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reese Stock Analysis</title>
+    <script>
+        // you can write to stdout for debugging purposes, e.g.
+        // console.log('this is a debug message');
+
+        function solution(B) {
+            // write your code in JavaScript (Node.js 8.9.4)
+            //Find where O is
+            let posx;
+            let posy;
+            for (let x = 0; x < B.length; x++) {
+                for (let y = 0; y < B.length; y++) {
+                    if (B[x][y] == 'O') {
+                        posx = y;
+                        posy = x;
+                        console.log(x);
+                        console.log(y);
+                    }
+                }
+            }
+            let pawnCount = 0;
+            //console.log(posy)
+            for (let x = parseInt(posy); x >= 0; x--) {
+                console.log(x);
+                //console.log(B[posy - 1][posx - 1]);
+
+                if (posx > 1 && posy > 1) {
+                    if (B[posy - 1][posx - 1] == 'X') {
+                        if (B[posy - 2][posx - 2] != null && B[posy - 2][posx - 2] != 'X') {
+                            pawnCount++;
+                            posy = (parseInt(posy) - 2);
+                            posx = (parseInt(posx) - 2);
+                            x -= 1;
+                        }
+                    }
+                    else if (B[posy - 1][posx + 1] == 'X') {
+                        if (B[parseInt(posy) - 2][parseInt(posx) + 2] == 'X' && B[parseInt(posy) - 2][parseInt(posx) + 2] != null) {
+                            pawnCount++;
+                            posy = (parseInt(posy) - 2);
+                            posx = (parseInt(posx) + 2);
+                            x -= 1;
+                        }
+                    }
+                }
+
+            }
+            console.log(pawnCount);
+            return pawnCount;
+        }
+        document.querySelector("#gay").innerHTML = solution(['..X...', '......', '....X.', '.X....', '..X.X.', '...O..'])
+    </script>
+</head>
+
+<body>
+
+    <div id="gay"></div>
+</body>
+
+</html>

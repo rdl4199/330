@@ -27,6 +27,9 @@ template.innerHTML = `
     p{
         font-size: 10px;
     }
+    hr{
+        background-color: gainsboro;
+    }
 </style>
 <div class="columns">
 
@@ -62,6 +65,15 @@ template.innerHTML = `
 </div>
 </div>
 `;
+function favorite(name, value, lastrange, average) {
+    firebase.writeFavNameData(name, value, lastrange, average, 1);
+    if (localStorage.getItem("rdl4199-favorites") == null) {
+        localStorage.setItem("rdl4199-favorites", `${name + "," + value + "," + lastrange + "," + average + ","}`);
+    }
+    else if (!localStorage.getItem("rdl4199-favorites").split(",").includes(`${name}`)) {
+        localStorage.setItem("rdl4199-favorites", `${localStorage.getItem("rdl4199-favorites") + name + "," + value + "," + lastrange + "," + average + ","}`);
+    }
+}
 class ChartCard extends HTMLElement {
     constructor() {
         super();
@@ -85,35 +97,35 @@ class ChartCard extends HTMLElement {
         this.render();
         const name = this.getAttribute("data-name");
         const value = this.getAttribute("data-value");
-        const lastrange = this.getAttribute("data-range");
+        const lastrange = this.getAttribute("data-lastrange");
         const average = this.getAttribute("data-average");
 
-        let stockObject = {name: name, value: value, lastrange: lastrange, average: average};
+        let stockObject = { name: name, value: value, lastrange: lastrange, average: average };
         //Disable button immediately if it in local storage
         if (localStorage.getItem("rdl4199-favorites") != null) {
             if (localStorage.getItem("rdl4199-favorites").split(",").includes(`${name}`)) {
                 this.button.disabled = true;
             }
         }
-//         var testObject = { 'one': 1, 'two': 2, 'three': 3 };
+        //         var testObject = { 'one': 1, 'two': 2, 'three': 3 };
 
-// // Put the object into storage
-// localStorage.setItem('testObject', JSON.stringify(testObject));
+        // // Put the object into storage
+        // localStorage.setItem('testObject', JSON.stringify(testObject));
 
-// // Retrieve the object from storage
-// var retrievedObject = localStorage.getItem('testObject');
+        // // Retrieve the object from storagef
+        // var retrievedObject = localStorage.getItem('testObject');
 
-// console.log('retrievedObject: ', JSON.parse(retrievedObject));
+        // console.log('retrievedObject: ', JSON.parse(retrievedObject));
         this.button.onclick = function () {
+            favorite(name, value, lastrange, average)
             //Write the favorited stock to firebase and localstorage for the user then disable the button
-          firebase.writeFavNameData(name, value, lastrange, average);
-          if (localStorage.getItem("rdl4199-favorites") == null)
-          {
-            localStorage.setItem("rdl4199-favorites", `${name + "," + value}`);
-          }
-          else if(!localStorage.getItem("rdl4199-favorites").split(",").includes(`${name}`)) {
-            localStorage.setItem("rdl4199-favorites", `${localStorage.getItem("rdl4199-favorites") + name + ","}`);
-        }
+            // firebase.writeFavNameData(name, value, lastrange, average, 1);
+            // if (localStorage.getItem("rdl4199-favorites") == null) {
+            //     localStorage.setItem("rdl4199-favorites", `${name + "," + value + "," + lastrange + "," + average + ","}`);
+            // }
+            // else if (!localStorage.getItem("rdl4199-favorites").split(",").includes(`${name}`)) {
+            //     localStorage.setItem("rdl4199-favorites", `${localStorage.getItem("rdl4199-favorites") + name + "," + value + "," + lastrange + "," + average + ","}`);
+            // }
             //Either way the button should be disabled after this
             this.disabled = true;
         }
@@ -213,3 +225,4 @@ class ChartCard extends HTMLElement {
     }
 };
 customElements.define('chart-card', ChartCard);
+export { favorite };
